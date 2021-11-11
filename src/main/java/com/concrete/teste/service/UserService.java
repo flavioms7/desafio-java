@@ -54,7 +54,6 @@ public class UserService {
         }
 
         UserResponse userResponse = new UserResponse();
-        //BeanUtils.copyProperties(userSaved, userResponse);
 
         userResponse.setId(user.getId());
         userResponse.setName(user.getName());

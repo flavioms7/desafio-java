@@ -4,13 +4,11 @@ import com.concrete.teste.model.LoginRequest;
 import com.concrete.teste.model.UserRequest;
 import com.concrete.teste.model.UserResponse;
 import com.concrete.teste.service.LoginService;
+import com.concrete.teste.service.ProfileService;
 import com.concrete.teste.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping
@@ -21,6 +19,9 @@ public class UserController {
 
     @Autowired
     LoginService loginService;
+
+    @Autowired
+    ProfileService profileService;
 
     @PostMapping("/createUser")
     public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest userRequest){
@@ -36,5 +37,13 @@ public class UserController {
         UserResponse response = loginService.login(loginRequest);
 
         return ResponseEntity.ok().body(response);
+    }
+
+    @PostMapping("/profile")
+    public ResponseEntity<UserResponse> profile(@RequestHeader String token, @RequestParam String id) {
+
+        UserResponse userDTO = profileService.profile(token, id);
+
+        return ResponseEntity.ok().body(userDTO);
     }
 }
